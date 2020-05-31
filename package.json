@@ -1,0 +1,22 @@
+{
+  "name": "ns",
+  "version": "1.0.0",
+  "description": "인증 서버의 토큰을 받아 파일 서버에 접근 후 암호화된 파일 다운받아 복호화 가능하게 하는 프로토콜",
+  "main": "client.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/spark328123/Secure-File-Retrieval-Protocol.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/spark328123/Secure-File-Retrieval-Protocol/issues"
+  },
+  "homepage": "https://github.com/spark328123/Secure-File-Retrieval-Protocol#readme",
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
