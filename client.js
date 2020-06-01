@@ -15,7 +15,7 @@ const {
     base64Decoding
 } = cryptoFuntions;
 
-const ID = 'spark328';
+const ID = 'spark328123';
 const password = 'sun3290!';
 
 const rl = readline.createInterface({
@@ -52,6 +52,13 @@ const listen1 = client.on('data',(data)=>{
         var K1 = makeNonce(256);
         var encryptK1 = encryptPub(base64Decoding(puAS),K1);
         console.log(`encryptK1 : ${encryptK1}`);
+        
+        const cipher = crypto.createCipher('aes-256-cbc', K1);
+        var idblock = ID+(16-ID.length);
+        idblock+=idblock;
+        var asc255 = String.fromCharCode(255);
+        var result = cipher.update(idblock, 'utf8', 'base64'); 
+        console.log(result);
     }
 })
 

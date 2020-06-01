@@ -38,6 +38,14 @@ exports.makeNonce = (size)=>{ // makes challenge and symmetric key
     return ret.toString(BASE64);
 }
 
+exports.aesEncrypt = (data)=>{
+
+}
+
+exports.aesDecrypt = (data)=>{
+    
+}
+
 exports.base64Encoding = (data)=>{
     return Buffer.from(data,UTF8).toString(BASE64);
 }
