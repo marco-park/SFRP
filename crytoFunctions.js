@@ -37,7 +37,8 @@ exports.makeNonce = (size)=>{ // makes challenge and symmetric key
         var k = s[(s[i]+s[j])%N];
         ret+=(parseInt(k/16).toString(16)+(k%16).toString(16)); //toHex(4bit + 4bit)
     }
-    return this.base64Encoding(ret);
+    ret = Buffer.from(ret, 'hex').toString('base64'); //hex to base64
+    return ret;
 }
 
 exports.aesEncrypt = (key, data)=>{

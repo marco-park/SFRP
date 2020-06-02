@@ -50,6 +50,7 @@ var server = net.createServer(socket=>{
                 var idLen = parseInt('0x'+result[15]);  //hex
                 var ID = result.substr(0,idLen);
                 resultrest = result.substring(16);
+                console.log(resultrest);
                 resultrest = resultrest.split('=');
                 var passwordHash = resultrest[0]+'=';
                 var challengeres = resultrest[1]+'=';
