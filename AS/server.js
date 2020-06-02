@@ -53,7 +53,7 @@ var server = net.createServer(socket=>{
                 console.log(resultrest);
                 resultrest = resultrest.split('=');
                 var passwordHash = resultrest[0]+'=';
-                var challengeres = resultrest[1]+'=';
+                var challengeres = resultrest[1]+'==';
                 console.log(`encrypt IDPWC : ${res[1]}`);
                 console.log(`decryptId : ${result.substr(0,16)}`);
                 console.log(`passwordHashres : ${passwordHash}`);
