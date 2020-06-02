@@ -1,4 +1,6 @@
 var crypto = require('crypto');
+
+const AES256CBC = 'aes-256-cbc';
 const SHA256 = 'sha256';
 const BASE64 = 'base64';
 const UTF8 = 'utf8';
@@ -10,7 +12,7 @@ exports.cryptoHashbase64 = (data)=>{
 exports.makeNonce = (size)=>{ // makes challenge and symmetric key
     var timestamp = new Date().getTime().toString();
     var pid = process.pid.toString();
-    var key = [...this.cryptoHashbase64(pid+timestamp)]; // key length : 256/8 = 32
+    var key = [...crypto.createHash(SHA256).update(pid+timestamp).digest()]; // key length : 256/8 = 32
     const N = 256;  
 
     // RC4 init
@@ -35,15 +37,21 @@ exports.makeNonce = (size)=>{ // makes challenge and symmetric key
         var k = s[(s[i]+s[j])%N];
         ret+=(parseInt(k/16).toString(16)+(k%16).toString(16)); //toHex(4bit + 4bit)
     }
-    return ret.toString(BASE64);
+    return this.base64Encoding(ret);
 }
 
-exports.aesEncrypt = (data)=>{
-
+exports.aesEncrypt = (key, data)=>{
+    const cipher = crypto.createCipher(AES256CBC, key);
+    var result = cipher.update(data,UTF8, BASE64);
+    result+=cipher.final(BASE64);
+    return result;
 }
 
-exports.aesDecrypt = (data)=>{
-    
+exports.aesDecrypt = (key, data)=>{
+    const cipher = crypto.createDecipher(AES256CBC, key);
+    var result = cipher.update(data,BASE64,UTF8);
+    result+=cipher.final(UTF8);
+    return result;
 }
 
 exports.base64Encoding = (data)=>{

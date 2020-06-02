@@ -12,11 +12,13 @@ const {
     encryptPri, 
     decryptPri, 
     base64Encoding, 
-    base64Decoding
+    base64Decoding,
+    aesDecrypt,
+    aesEncrypt,
 } = cryptoFuntions;
 
-const ID = 'spark328123';
-const password = 'sun3290!';
+const ID = 'alice';
+const password = 'doffltm!';
 
 const rl = readline.createInterface({
     input: process.stdin,
@@ -50,15 +52,17 @@ const listen1 = client.on('data',(data)=>{
     //verify S
     if(decryptS==hashS){   
         var K1 = makeNonce(256);
+        console.log(`K1 : ${K1}`);
         var encryptK1 = encryptPub(base64Decoding(puAS),K1);
         console.log(`encryptK1 : ${encryptK1}`);
         
-        const cipher = crypto.createCipher('aes-256-cbc', K1);
-        var idblock = ID+(16-ID.length);
-        idblock+=idblock;
+        var idblock = ID;
+        var idLen = ID.length;
         var asc255 = String.fromCharCode(255);
-        var result = cipher.update(idblock, 'utf8', 'base64'); 
-        console.log(result);
+        while(idblock.length!=15)idblock+=asc255;
+        idblock+=idLen.toString(16);
+        var result = aesEncrypt(K1,idblock+cryptoHashbase64(password)+challenge);
+        client.write([encryptK1,result].join(','));
     }
 })
 
